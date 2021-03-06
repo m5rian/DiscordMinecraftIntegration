@@ -1,4 +1,4 @@
-package github.m5rian.listeners;
+package github.m5rian.listeners.discord;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

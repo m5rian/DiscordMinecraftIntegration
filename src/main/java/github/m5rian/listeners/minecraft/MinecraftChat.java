@@ -1,4 +1,4 @@
-package github.m5rian.listeners;
+package github.m5rian.listeners.minecraft;
 
 import github.m5rian.utils.Config;
 import github.m5rian.utils.Webhook;

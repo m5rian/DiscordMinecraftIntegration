@@ -1,7 +1,7 @@
 package github.m5rian;
 
-import github.m5rian.listeners.DiscordChat;
-import github.m5rian.listeners.MinecraftChat;
+import github.m5rian.listeners.discord.DiscordChat;
+import github.m5rian.listeners.minecraft.MinecraftChat;
 import github.m5rian.utils.Config;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
