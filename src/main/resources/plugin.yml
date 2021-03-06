@@ -1,0 +1,4 @@
+name: JDChat
+version: @version@
+main: github.m5rian.Plugin
+api-version: 1.16
