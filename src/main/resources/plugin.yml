@@ -1,4 +1,10 @@
-name: JDChat
+name: DiscordMinecraftintegration
 version: @version@
 main: github.m5rian.Plugin
+authors: [Marian]
 api-version: 1.16
+description: A integration for Discord and Minecraft
+
+commands:
+  verify:
+    description: Confirm your verfification

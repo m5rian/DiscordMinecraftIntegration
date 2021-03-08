@@ -18,7 +18,7 @@ public class MinecraftChat implements Listener {
         Webhook webhook = new Webhook(Config.get().getString("webhookUrl"));
         webhook.setAvatarUrl(avatar);
         webhook.setUsername(userName);
-        webhook.setContent(message);
+        webhook.setContent(String.format("%s\u2503%s", Config.get().getString("minecraftEmoji"), message));
         webhook.send();
     }
 }
