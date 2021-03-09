@@ -1,6 +1,6 @@
-name: DiscordMinecraftintegration
+name: DiscordBridge
 version: @version@
-main: github.m5rian.Plugin
+main: github.m5rian.DiscordBridge
 authors: [Marian]
 api-version: 1.16
 description: A integration for Discord and Minecraft

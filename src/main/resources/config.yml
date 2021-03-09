@@ -1,0 +1,10 @@
+# Discord bot token. This can be found at the discord developer dashboard:
+# https://discord.com/developers/applications
+
+discord:
+  token: none                                     # The discord bot token
+  guildId: none                                   # The discord server id
+  channelId: none                                 # The discord channel the bot will listen to
+  prefix: m!
+  webhookUrl: none
+  minecraftEmoji: <:Minecraft:818392845241024522> # String which gets added once a user sends a message

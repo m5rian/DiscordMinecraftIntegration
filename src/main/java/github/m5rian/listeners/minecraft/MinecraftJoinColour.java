@@ -1,11 +1,12 @@
 package github.m5rian.listeners.minecraft;
 
+import github.m5rian.DiscordBridge;
 import github.m5rian.utils.Config;
 import github.m5rian.utils.Members;
+import net.dv8tion.jda.api.entities.Guild;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,6 +17,13 @@ import java.awt.*;
 import java.util.UUID;
 
 public class MinecraftJoinColour implements Listener {
+    private final Config config;
+    private final Guild guild;
+
+    public MinecraftJoinColour(DiscordBridge discordBridge) {
+        this.config = discordBridge.getConfiguration();
+        this.guild = discordBridge.getBoundGuild();
+    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -28,13 +36,11 @@ public class MinecraftJoinColour implements Listener {
             final UUID uuidGame = event.getPlayer().getUniqueId(); // Get UUID of player
 
             if (uuidGame.toString().equals(uuidDatabase)) {
-                Config.getGuild.retrieveMemberById(discordId).queue(discordMember -> { // Retrieve member
-                    System.out.println("iohgrtphiiopjyerpjnglp<ijngp<ip<w");
+                this.guild.retrieveMemberById(discordId).queue(discordMember -> { // Retrieve member
                     final Color colour = discordMember.getColor();
                     final int r = colour.getRed();
                     final int g = colour.getGreen();
                     final int b = colour.getBlue();
-                    final String hex = String.format("#%02x%02x%02x", r, g, b); // Get hex of it
 
                     TextComponent text = Component.text(event.getPlayer().getName(), TextColor.color(r, g, b));
                     event.getPlayer().playerListName(text);

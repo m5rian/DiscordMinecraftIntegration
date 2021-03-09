@@ -1,5 +1,6 @@
 package github.m5rian.commands.discord;
 
+import github.m5rian.DiscordBridge;
 import github.m5rian.utils.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -9,16 +10,21 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class LinkAccount extends ListenerAdapter {
+    private final Config config;
+
+    public LinkAccount(DiscordBridge discordBridge) {
+        this.config = discordBridge.getConfiguration();
+    }
 
     public static final HashMap<String, Long> verify = new HashMap<>();
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         try {
-            if (event.getGuild().getIdLong() != Config.get().getLong("guildId")) return; // Wrong guild
+            if (event.getGuild().getIdLong() != this.config.getLong("discord.guildId")) return; // Wrong guild
 
             final String message = event.getMessage().getContentRaw(); // Get message
 
-            if (message.equalsIgnoreCase(Config.prefix + "link account")) {
+            if (message.equalsIgnoreCase(this.config.getString("discord.prefix") + "link account")) {
                 event.getAuthor().openPrivateChannel().queue(dm -> {
                     final String randomCode = getRandomCode(); // Get random code
 

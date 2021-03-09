@@ -1,4 +1,4 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+import org.apache.tools.ant.filters.ReplaceTokens;
 
 plugins {
     id 'java'
@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+    compile group: 'org.yaml', name: 'snakeyaml', version: '1.28' // Snake yaml
     compile group: 'org.json', name: 'json', version: '20201115' // JSON
     compile group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5' // OkHttp
     compile(group: 'net.dv8tion', name: 'JDA', version: '4.2.0_233') { // JDA
