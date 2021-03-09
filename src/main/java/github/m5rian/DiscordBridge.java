@@ -46,23 +46,7 @@ public final class DiscordBridge extends JavaPlugin {
 
             this.config.load(); // Update config file
 
-            this.discordChat = new DiscordChat(this);
-            this.linkAccount = new LinkAccount(this);
-
-            this.minecraftChat = new MinecraftChat(this);
-            this.minecraftJoinColour = new MinecraftJoinColour(this);
-            this.minecraftJoinLeaveMessage = new MinecraftJoinLeaveMessage(this);
-
-            this.confirmVerify = new ConfirmVerify();
-            // Register discord listeners
-            jda.addEventListener(discordChat, linkAccount);
-            // Register minecraft listeners
-            final PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-            pluginManager.registerEvents(this.minecraftChat, this);
-            pluginManager.registerEvents(this.minecraftJoinColour, this);
-            pluginManager.registerEvents(this.minecraftJoinLeaveMessage, this);
-            // Register commands
-            Bukkit.getPluginCommand("verify").setExecutor(confirmVerify);
+            register();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,6 +57,26 @@ public final class DiscordBridge extends JavaPlugin {
      */
     @Override
     public void onDisable() {
+    }
+
+    private void register() {
+        this.discordChat = new DiscordChat(this);
+        this.linkAccount = new LinkAccount(this);
+
+        this.minecraftChat = new MinecraftChat(this);
+        this.minecraftJoinColour = new MinecraftJoinColour(this);
+        this.minecraftJoinLeaveMessage = new MinecraftJoinLeaveMessage(this);
+
+        this.confirmVerify = new ConfirmVerify();
+        // Register discord listeners
+        jda.addEventListener(discordChat, linkAccount);
+        // Register minecraft listeners
+        final PluginManager pluginManager = Bukkit.getServer().getPluginManager();
+        pluginManager.registerEvents(this.minecraftChat, this);
+        pluginManager.registerEvents(this.minecraftJoinColour, this);
+        pluginManager.registerEvents(this.minecraftJoinLeaveMessage, this);
+        // Register commands
+        Bukkit.getPluginCommand("verify").setExecutor(confirmVerify);
     }
 
     /**
