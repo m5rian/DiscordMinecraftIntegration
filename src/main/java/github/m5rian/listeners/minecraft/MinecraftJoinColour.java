@@ -22,7 +22,7 @@ public class MinecraftJoinColour implements Listener {
 
     public MinecraftJoinColour(DiscordBridge discordBridge) {
         this.config = discordBridge.getConfiguration();
-        this.guild = discordBridge.getBoundGuild();
+        this.guild = discordBridge.getJda().getGuildById(this.config.getLong("discord.guildId"));
     }
 
     @EventHandler

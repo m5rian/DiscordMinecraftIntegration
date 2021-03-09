@@ -14,12 +14,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.Random;
 
 public class MinecraftJoinLeaveMessage implements Listener {
-    private final Guild guild;
     private final Config config;
+    private final Guild guild;
 
     public MinecraftJoinLeaveMessage(DiscordBridge discordBridge) {
-        this.guild = discordBridge.getBoundGuild();
         this.config = discordBridge.getConfiguration();
+        this.guild = discordBridge.getJda().getGuildById(this.config.getLong("discord.guildId"));
     }
 
     private static final String[] joinMessages = {

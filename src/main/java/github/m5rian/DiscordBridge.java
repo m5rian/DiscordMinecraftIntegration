@@ -44,6 +44,8 @@ public final class DiscordBridge extends JavaPlugin {
                     .enableIntents(GatewayIntent.GUILD_MESSAGES)
                     .build().awaitReady();
 
+            this.config.load(); // Update config file
+
             this.discordChat = new DiscordChat(this);
             this.linkAccount = new LinkAccount(this);
 
@@ -80,7 +82,7 @@ public final class DiscordBridge extends JavaPlugin {
         return config;
     }
 
-    public Guild getBoundGuild() {
-        return jda.getGuildById(config.getLong("discord.guildId"));
+    public JDA getJda() {
+        return this.jda;
     }
 }
