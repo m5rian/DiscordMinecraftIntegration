@@ -29,6 +29,7 @@ public class Config {
                 save();
             });
         }
+
     }
 
     public Long getLong(@NotNull String key) {
