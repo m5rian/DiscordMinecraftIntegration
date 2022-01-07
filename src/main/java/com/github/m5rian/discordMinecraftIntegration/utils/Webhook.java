@@ -1,4 +1,4 @@
-package github.m5rian.utils;
+package com.github.m5rian.discordMinecraftIntegration.utils;
 
 import com.squareup.okhttp.*;
 import org.json.JSONObject;

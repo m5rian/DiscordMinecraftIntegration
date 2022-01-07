@@ -1,10 +1,11 @@
-name: DiscordBridge
-version: @version@
-main: github.m5rian.DiscordBridge
+name: DiscordMinecraftIntegration
+version: '${version}'
+main: com.github.m5rian.discordMinecraftIntegration.DiscordBridge
 authors: [Marian]
-api-version: 1.16
+api-version: 1.18
 description: A integration for Discord and Minecraft
 
 commands:
   verify:
     description: Confirm your verfification
+    usage: /<command>

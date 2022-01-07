@@ -1,4 +1,4 @@
-package github.m5rian.utils;
+package com.github.m5rian.discordMinecraftIntegration.utils;
 
 import org.json.JSONArray;
 

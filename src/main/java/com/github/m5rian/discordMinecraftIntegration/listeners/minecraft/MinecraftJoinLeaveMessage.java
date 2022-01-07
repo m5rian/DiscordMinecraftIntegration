@@ -1,11 +1,12 @@
-package github.m5rian.listeners.minecraft;
+package com.github.m5rian.discordMinecraftIntegration.listeners.minecraft;
 
-import github.m5rian.DiscordBridge;
-import github.m5rian.utils.Config;
+import com.github.m5rian.discordMinecraftIntegration.DiscordBridge;
+import com.github.m5rian.discordMinecraftIntegration.utils.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -40,7 +41,7 @@ public class MinecraftJoinLeaveMessage implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        final String userName = new PlainComponentSerializer().serialize(event.getPlayer().displayName()); // Get username
+        final String userName = PlainTextComponentSerializer.plainText().serialize(event.getPlayer().displayName()); // Get username
         final String avatar = "https://crafatar.com/avatars/" + event.getPlayer().getUniqueId().toString();
 
         final int random = new Random().nextInt(joinMessages.length); // Get random number
@@ -48,7 +49,7 @@ public class MinecraftJoinLeaveMessage implements Listener {
                 .setColor(0x3FFE3F) // Lime colour
                 .setAuthor(joinMessages[random].replace("{user}", userName), null, avatar);
         final TextChannel chat = this.guild.getTextChannelById(this.config.getLong("discord.channelId")); // Get discord chat channel
-        chat.sendMessage(join.build()).queue(); // Send message
+        chat.sendMessageEmbeds(join.build()).queue(); // Send message
     }
 
     @EventHandler
@@ -61,7 +62,7 @@ public class MinecraftJoinLeaveMessage implements Listener {
                 .setColor(0xFE3F3F) // Light red colour
                 .setAuthor(leaveMessages[random].replace("{user}", userName), null, avatar);
         final TextChannel chat = this.guild.getTextChannelById(this.config.getLong("discord.channelId")); // Get discord chat channel
-        chat.sendMessage(leave.build()).queue(); // Send message
+        chat.sendMessageEmbeds(leave.build()).queue(); // Send message
     }
 
 }

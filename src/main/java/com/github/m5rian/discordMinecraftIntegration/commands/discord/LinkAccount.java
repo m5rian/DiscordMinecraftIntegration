@@ -1,10 +1,11 @@
-package github.m5rian.commands.discord;
+package com.github.m5rian.discordMinecraftIntegration.commands.discord;
 
-import github.m5rian.DiscordBridge;
-import github.m5rian.utils.Config;
+import com.github.m5rian.discordMinecraftIntegration.DiscordBridge;
+import com.github.m5rian.discordMinecraftIntegration.utils.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -18,20 +19,20 @@ public class LinkAccount extends ListenerAdapter {
 
     public static final HashMap<String, Long> verify = new HashMap<>();
 
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onMessageReceived(MessageReceivedEvent event) {
         try {
+            if (!event.isFromGuild()) return;
             if (event.getGuild().getIdLong() != this.config.getLong("discord.guildId")) return; // Wrong guild
-
             final String message = event.getMessage().getContentRaw(); // Get message
 
             if (message.equalsIgnoreCase(this.config.getString("discord.prefix") + "link account")) {
                 event.getAuthor().openPrivateChannel().queue(dm -> {
                     final String randomCode = getRandomCode(); // Get random code
 
-                    EmbedBuilder verifyCode = new EmbedBuilder()
+                    final EmbedBuilder verifyCode = new EmbedBuilder()
                             .setTitle("Verify")
                             .setDescription("Verify your account and type in the minecraft chat the following command\n```/verify " + randomCode + "```");
-                    dm.sendMessage(verifyCode.build()).queue(); // Send dm
+                    dm.sendMessageEmbeds(verifyCode.build()).queue(); // Send dm
 
                     verify.put(randomCode, event.getAuthor().getIdLong()); // Add code to HashMap
                 });

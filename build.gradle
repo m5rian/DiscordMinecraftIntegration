@@ -1,14 +1,10 @@
-import org.apache.tools.ant.filters.ReplaceTokens;
-
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '4.0.4'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
-version = '1.0'
-
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+group = 'com.github.m5rian'
+version = '1'
 
 repositories {
     mavenCentral()
@@ -20,20 +16,38 @@ repositories {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
-    jcenter()
 }
 
 dependencies {
-    compile group: 'org.json', name: 'json', version: '20201115' // JSON
-    compile group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5' // OkHttp
-    compile(group: 'net.dv8tion', name: 'JDA', version: '4.2.0_233') { // JDA
+    compileOnly 'io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT'
+    implementation group: 'org.json', name: 'json', version: '20201115' // JSON
+    implementation group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5' // OkHttp
+    implementation(group: 'net.dv8tion', name: 'JDA', version: '5.0.0-alpha.3') { // JDA
         exclude module: 'opus-java' // Without audio
     }
-    compile group: 'com.destroystokyo.paper', name: 'paper-api', version: '1.16.5-R0.1-SNAPSHOT' // Paper Mc
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
 }
 
 processResources {
-    from(sourceSets.main.resources.srcDirs) {
-        filter ReplaceTokens, tokens: [version: version]
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
     }
 }

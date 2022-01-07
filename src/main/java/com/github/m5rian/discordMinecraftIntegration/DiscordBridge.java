@@ -1,22 +1,24 @@
-package github.m5rian;
+package com.github.m5rian.discordMinecraftIntegration;
 
-import github.m5rian.commands.discord.LinkAccount;
-import github.m5rian.commands.minecraft.ConfirmVerify;
-import github.m5rian.listeners.discord.DiscordChat;
-import github.m5rian.listeners.minecraft.MinecraftChat;
-import github.m5rian.listeners.minecraft.MinecraftJoinColour;
-import github.m5rian.listeners.minecraft.MinecraftJoinLeaveMessage;
-import github.m5rian.utils.Config;
+import com.github.m5rian.discordMinecraftIntegration.commands.discord.LinkAccount;
+import com.github.m5rian.discordMinecraftIntegration.commands.minecraft.ConfirmVerify;
+import com.github.m5rian.discordMinecraftIntegration.listeners.discord.DiscordChat;
+import com.github.m5rian.discordMinecraftIntegration.listeners.minecraft.MinecraftChat;
+import com.github.m5rian.discordMinecraftIntegration.listeners.minecraft.MinecraftJoinColour;
+import com.github.m5rian.discordMinecraftIntegration.listeners.minecraft.MinecraftJoinLeaveMessage;
+import com.github.m5rian.discordMinecraftIntegration.utils.Config;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.security.auth.login.LoginException;
+
 public final class DiscordBridge extends JavaPlugin {
+
     // Minecraft listeners
     private MinecraftChat minecraftChat;
     private MinecraftJoinColour minecraftJoinColour;
@@ -41,7 +43,7 @@ public final class DiscordBridge extends JavaPlugin {
             // Build bot
             jda = JDABuilder.createLight(config.getString("discord.token"))
                     .setActivity(Activity.playing("Minecraft"))
-                    .enableIntents(GatewayIntent.GUILD_MESSAGES)
+                    .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                     .build().awaitReady();
 
             this.config.load(); // Update config file

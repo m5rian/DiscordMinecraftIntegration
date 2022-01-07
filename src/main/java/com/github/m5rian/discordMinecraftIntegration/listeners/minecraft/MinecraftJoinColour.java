@@ -1,8 +1,8 @@
-package github.m5rian.listeners.minecraft;
+package com.github.m5rian.discordMinecraftIntegration.listeners.minecraft;
 
-import github.m5rian.DiscordBridge;
-import github.m5rian.utils.Config;
-import github.m5rian.utils.Members;
+import com.github.m5rian.discordMinecraftIntegration.DiscordBridge;
+import com.github.m5rian.discordMinecraftIntegration.utils.Config;
+import com.github.m5rian.discordMinecraftIntegration.utils.Members;
 import net.dv8tion.jda.api.entities.Guild;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -31,7 +31,7 @@ public class MinecraftJoinColour implements Listener {
         for (int i = 0; i < members.length(); i++) {
             JSONObject member = members.getJSONObject(i); // Get current member
 
-            final Long discordId = member.getLong("discord"); // Get id of discord user
+            final long discordId = member.getLong("discord"); // Get id of discord user
             final String uuidDatabase = member.getString("minecraft"); // Get UUID of saved member
             final UUID uuidGame = event.getPlayer().getUniqueId(); // Get UUID of player
 

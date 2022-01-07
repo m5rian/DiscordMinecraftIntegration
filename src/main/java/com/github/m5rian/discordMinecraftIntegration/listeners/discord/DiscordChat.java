@@ -1,11 +1,11 @@
-package github.m5rian.listeners.discord;
+package com.github.m5rian.discordMinecraftIntegration.listeners.discord;
 
-import github.m5rian.DiscordBridge;
-import github.m5rian.utils.Config;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import com.github.m5rian.discordMinecraftIntegration.DiscordBridge;
+import com.github.m5rian.discordMinecraftIntegration.utils.Config;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 
 public class DiscordChat extends ListenerAdapter {
@@ -15,12 +15,13 @@ public class DiscordChat extends ListenerAdapter {
         this.config = discordBridge.getConfiguration();
     }
 
-
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onMessageReceived(MessageReceivedEvent event) {
         try {
+            if (!event.isFromGuild()) return;
             if (event.getMessage().isWebhookMessage()) return; // Message is webhook
-            if (event.getGuild().getIdLong() != this.config.getLong("guildId")) return; // Wrong guild
-            if (this.config.getLong("channelId") != event.getChannel().getIdLong()) return; // Wrong channel
+
+            if (event.getGuild().getIdLong() != this.config.getLong("discord.guildId")) return; // Wrong guild
+            if (event.getChannel().getIdLong() != this.config.getLong("discord.channelId")) return; // Wrong channel
 
             final String message = event.getMessage().getContentDisplay(); // Get message
             final String username = event.getAuthor().getName(); // Get username
@@ -29,7 +30,7 @@ public class DiscordChat extends ListenerAdapter {
             Bukkit.getConsoleSender().sendMessage(message.toLowerCase());
             Bukkit.getConsoleSender().sendMessage(this.config.getString("prefix"));
 
-            TextComponent msg = new PlainComponentSerializer().deserialize(String.format("<%s> %s", username, message));
+            final TextComponent msg = PlainTextComponentSerializer.plainText().deserialize(String.format("<%s> %s", username, message));
             Bukkit.getServer().sendMessage(msg);
         } catch (Exception e) {
             e.printStackTrace();

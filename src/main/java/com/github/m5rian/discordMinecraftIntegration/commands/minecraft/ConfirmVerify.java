@@ -1,7 +1,7 @@
-package github.m5rian.commands.minecraft;
+package com.github.m5rian.discordMinecraftIntegration.commands.minecraft;
 
-import github.m5rian.commands.discord.LinkAccount;
-import github.m5rian.utils.Members;
+import com.github.m5rian.discordMinecraftIntegration.commands.discord.LinkAccount;
+import com.github.m5rian.discordMinecraftIntegration.utils.Members;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

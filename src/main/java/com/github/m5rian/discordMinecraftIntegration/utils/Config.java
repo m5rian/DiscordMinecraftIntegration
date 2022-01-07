@@ -1,6 +1,6 @@
-package github.m5rian.utils;
+package com.github.m5rian.discordMinecraftIntegration.utils;
 
-import github.m5rian.DiscordBridge;
+import com.github.m5rian.discordMinecraftIntegration.DiscordBridge;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.configuration.file.FileConfiguration;
