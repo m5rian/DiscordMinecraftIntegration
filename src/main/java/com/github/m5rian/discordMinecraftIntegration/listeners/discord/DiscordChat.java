@@ -17,11 +17,7 @@ public class DiscordChat extends ListenerAdapter {
 
     public void onMessageReceived(MessageReceivedEvent event) {
         try {
-            if (!event.isFromGuild()) return;
-            if (event.getMessage().isWebhookMessage()) return; // Message is webhook
-
-            if (event.getGuild().getIdLong() != this.config.getLong("discord.guildId")) return; // Wrong guild
-            if (event.getChannel().getIdLong() != this.config.getLong("discord.channelId")) return; // Wrong channel
+            if (filter(event)) return;
 
             final String message = event.getMessage().getContentDisplay(); // Get message
             final String username = event.getAuthor().getName(); // Get username
@@ -35,5 +31,16 @@ public class DiscordChat extends ListenerAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean filter(MessageReceivedEvent event) {
+        if (event.getGuild().getIdLong() != this.config.getLong("discord.guildId")) return true;
+        if (event.getChannel().getIdLong() != this.config.getLong("discord.channelId")) return true;
+
+        if (!event.isFromGuild()) return true;
+        if (event.getMessage().isWebhookMessage()) return true; // Message is webhook
+        if (event.getAuthor().isBot()) return true;
+        if (event.getMessage().getContentDisplay().isBlank()) return true;
+        else return false;
     }
 }
